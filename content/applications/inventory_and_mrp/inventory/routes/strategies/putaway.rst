@@ -1,54 +1,90 @@
+<<<<<<< HEAD
 =======================
-What is a Putaway Rule?
+Putaway Rules
 =======================
 
-A good warehouse implementation takes care that products automatically move to their appropriate
-destination location. To make that process easier, Odoo uses *Putaway rules*. But what is a putaway
-rule? Putaway is the process of taking products off the receiving shipments and directly putting
-them into the most appropriate location.
+A good warehouse implementation ensures that products automatically move to their appropriate
+destination location. This process is seamless using Odoo's *Putaway rules*. Putaway is the process
+of receiving shipments and putting products in appropriate locations.
 
-If, for example, a warehouse contains volatile substances, it is important to make sure that certain
-products are not stored close to each other because of a potential chemical reaction. That’s where
-putaway rules intervene, to avoid storing products wrongly.
+=======
+=============
+Putaway Rules
+=============
+
+Defined by situations, conditions, and instructions, *Putaway rules* detail how incoming products
+should be moved to specified locations. They are :ref:`push rules<inventory/routes/use_routes/push>`
+triggered by the arrival of shipments in a certain location. The automatically generated rules
+precisely instruct warehouse employees how and where to put away received products.
+
+It is crucial when a warehouse contains volatile substances; putaway rules communicate the
+importance that certain products cannot be stored in close proximity and minimize risks of chemical
+reaction.
+>>>>>>> ce24d81ba ([TAG] application/module: describe your changes in a short sentence)
+If, for example, a warehouse contains multiple volatile substances that should not come into contact, it is crucial that these substances not be stored in close proximity to one another. Using putaway rules, it is possible to ensure that such products are stored in different locations.
 
 Configuration
 =============
 
-In the *Inventory* app, go to :menuselection:`Configuration --> Settings` and activate the
-*Multi-Step Routes*. By doing so, the *Storage Locations* will be automatically activated.
+Begin by navigating to :menuselection:`Inventory --> Configuration --> Settings`, then activate the
+:guilabel:`Multi-Step Routes` checkbox under the :guilabel:`Warehouse` heading. By doing so, the
+:guilabel:`Storage Locations` setting is automatically
+enabled as well. Finally, click :guilabel:`Save`.
 
-.. image:: putaway/putaw1.png
+.. image:: putaway/multi-steps-routes.png
    :align: center
+   :alt: Check multi-step routes box
 
-Setting up a Putaway Rule
-=========================
+Create a putaway rule
+=====================
 
-In some cases, like for a retail shop storing vegetables and fruits, we have to store products in
-different locations to maintain product quality.
+When a grocery store sells fruits and vegetables, products should be stored in different locations
+depending on factors like frequency, size, product category, and specific environment needs.
 
-Let’s suppose there are one warehouse location *WH/Stock* and two sub-locations
-*WH/Stock/Vegetables* and *WH/Stock/Fruits*.
+Suppose the warehouse location :guilabel:`WH/Stock` contains two sub-locations
+`WH/Stock/Vegetables` and `WH/Stock/Fruits`.
 
-To manage those locations, we will create putaway rules. To do so, open the *Inventory* app and go
-to :menuselection:`Configuration --> Putaway Rules`. Then, click on create and configure your first
-rule indicating the main location the product will enter before being redirected to the right
-location.
+To manage where specific products are routed for storage, navigate to :menuselection:`Inventory -->
+Configuration --> Putaway Rules`. Then, click on :guilabel:`Create` to configure a new putaway rule.
+Choose the :guilabel:`Product` and/or :guilabel:`Product Category` that the rule will affect. Set
+:guilabel:`When product arrives in` as the location where the rule will be triggered and
+:guilabel:`Store to` as the location where products affected by the rule will be stored. Finally,
+click :guilabel:`Save`.
 
 .. note::
-   The putaway rules can be defined either per product or per product category.
+  It is also possible to create and manage putaway rules for a single product by going to the
+  product page and clicking the :guilabel:`Putaway Rules` smart button at the top of the page.
 
 .. image:: putaway/putaw2.png
    :align: center
 
-Now, if I purchase apples and carrots to my supplier, they will be grouped in the same receipt but
-redirected to the right location automatically, thanks to putaway rules. This information is
-available from *Inventory Report*, under the reporting menu.
+.. note::
+   The putaway rules can also be defined per product/product category, location, and package
+   type (enable :guilabel:`Packages` in :menuselection:`Configuration --> Settings`). Define them
+   through the :guilabel:`Smart Button` on each form.
+
+.. note::
+   If the location does not appear in the drop-down menu, add a new location in
+   :menuselection:`Configuration --> Locations`. :guilabel:`Store to` locations can only be child
+   locations of the location of origin.
+
+Once a putaway rule has been configured, the product it specifies will be automatically routed to
+the :guilabel:`Store to` location upon arriving in the :guilabel:`When product arrives in` location.
+The summary of internal product movements can be viewed by selecting :menuselection:`Reporting -->
+Product Moves` and enabling the :guilabel:`Internal` search filter on the :guilabel:`Filters`
+dropdown under the :guilabel:`search bar` at the top of the page.
 
 .. image:: putaway/putaw3.png
    :align: center
+   :alt: Purchase order for apples and carrots
 
 .. image:: putaway/putaw4.png
    :align: center
 
 .. image:: putaway/putaw5.png
    :align: center
+
+.. note::
+   :guilabel:`Inventory Report` displays only :guilabel:`Product Types` with :guilabel:`Storable
+   Product` as the value. To see how :guilabel:`Consumable Products` are moved using putaway rules,
+   track them with :menuselection:`Reporting --> Product Moves`.
