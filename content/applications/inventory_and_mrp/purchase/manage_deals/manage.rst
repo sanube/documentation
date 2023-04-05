@@ -2,226 +2,177 @@
 Manage vendor bills
 ===================
 
-The **Purchase** application allows you to manage your purchase orders,
-incoming products, and vendor bills all seamlessly in one place.
+A vendor bill is an invoice received for products and services that a company purchases from a
+vendor. Vendor bills record payables as they arrive from vendors, and can include amounts owed for
+the goods purchased, sales taxes, freight and delivery charges, and more.
 
-If you want to set up a vendor bill control process, the first thing you
-need to do is to have purchase data in Odoo. Knowing what has been
-purchased and received is the first step towards understanding your
-purchase management processes.
+In Odoo, a vendor bill can be created at different points in the purchasing process, depending on
+the :guilabel:`Bill Control` policy chosen in the :guilabel:`Purchase` app settings.
 
-Here is the standard work flow in Odoo:
+Bill control policies
+=====================
 
-1. You begin with a **Request for Quotation (RFQ)** to send out to your
-   vendor(s).
+To view the default bill control policy and make changes, go to :menuselection:`Purchase -->
+Configuration --> Settings`, and scroll down to the :guilabel:`Invoicing` section. Here, there are
+the two :guilabel:`Bill Control` policy options: :guilabel:`Ordered quantities` and
+:guilabel:`Received quantities`.
 
-2. Once the vendor has accepted the RFQ, confirm the RFQ into a
-   **Purchase Order (PO)**.
+.. image:: manage/manage-configuration-settings.png
+   :align: center
+   :alt: Bill control policies in purchase app settings.
 
-3. Confirming the PO generates an **Incoming Shipment** if you purchased
-   any stockable products.
+The policy selected will be the default for any new product created. The definition of each policy
+is as follows:
 
-4. Upon receiving a **Vendor Bill** from your Vendor, validate the bill
-   with products received in the previous step to ensure accuracy.
-
-This process may be done by three different people within the company,
-or only one.
-
-Configuration
-=============
-
-Installing the Purchase and Inventory applications
---------------------------------------------------
-
-From the **Apps** application, search for the **Purchase** module and
-install it. Due to certain dependencies, installing Purchase will
-automatically install the **Inventory** and **Accounting** applications.
-
-Creating products
------------------
-
-Creating products in Odoo is essential for quick and efficient
-purchasing within Odoo. Simply navigate to the Products submenu under
-Purchase and click create.
-
-.. image:: manage/manage01.png
-  :align: center
-
-When creating the product, pay attention to the **Product Type** field,
-since it is important:
-
-- Products that are set as **Stockable or Consumable** will allow you
-  to keep track of their inventory levels. These options imply
-  stock management and will allow for receiving these kinds of
-  products.
-
-- Conversely, products that are set as a **Service or Digital Product**
-  will not imply stock management, simply due to the fact that
-  there is no inventory to manage. You will not be able to receive
-  products under either of these designations.
+- :guilabel:`Ordered quantities`: creates a vendor bill as soon as a purchase order is confirmed.
+  The products and quantities in the purchase order are used to generate a draft bill.
+- :guilabel:`Received quantities`: a bill is created only *after* part of the total order has been
+  received. The products and quantities *received* are used to generate a draft bill. An error
+  message will appear if creation of a vendor bill is attempted without receiving anything.
 
 .. tip::
-   It is recommended that you create a **Miscellaneous** product for all purchases
-   that occur infrequently and do not require inventory valuation or management.
-   If you create such a product, it is recommended to set the product type to **Service**.
+   If one or two products need a different control policy, the default bill control setting can be
+   overridden by going to the :guilabel:`Purchase` tab in a product's template and modifying its
+   :guilabel:`Control Policy` field.
 
-Managing your Vendor Bills
-==========================
+.. image:: manage/manage-product-form.png
+   :align: center
+   :alt: Control policy field on product form.
 
-Purchasing products or services
--------------------------------
+3-way matching
+--------------
 
-From the purchase application, you can create a purchase order with as
-many products as you need. If the vendor sends you a confirmation or
-quotation for an order, you may record the order reference number in the
-**Vendor Reference** field. This will enable you to easily match the PO
-with the the vendor bill later (as the vendor bill will probably include
-the Vendor Reference)
+Activating :guilabel:`3-way matching` ensures that vendor bills are only paid once some (or all) of
+the products included in the purchase order have actually been received. To activate it, go to
+:menuselection:`Purchase --> Configuration --> Settings`, and scroll down to the
+:guilabel:`Invoicing` section. Then, click
+:guilabel:`3-way matching: purchases, receptions, and bills`.
 
-.. image:: manage/manage02.png
-  :align: center
+.. important::
+   :guilabel:`3-way matching` is *only* intended to work with the :guilabel:`Bill Control` policy
+   set to :guilabel:`Received quantities`.
 
-Validate the purchase order and receive the products from the Inventory
-application.
+.. image:: manage/manage-three-way-matching.png
+   :align: center
+   :alt: Activated three-way matching feature in purchase settings.
 
-Receiving Products
-------------------
+Create and manage vendor bills on receipts
+==========================================
 
-If you purchased any stockable products that you manage the inventory
-of, you will need to receive the products from the Inventory application
-after you confirm a purchase order. From the **Inventory dashboard**, you
-should see a button linking you directly to the transfer of products.
-This button is outlined in red below:
+With the bill control policy set to ordered quantities
+------------------------------------------------------
 
-.. image:: manage/manage03.png
-  :align: center
+To create and manage vendor bills on receipts using the *ordered quantities* bill control policy,
+first go to :menuselection:`Purchase --> Configuration --> Settings`, scroll down to the
+:guilabel:`Invoicing` section, and select :guilabel:`Ordered quantities`. Then, :guilabel:`Save`
+changes.
 
-Navigating this route will take you to a list of all orders waiting to
-be received.
+Next, go to the :guilabel:`Purchase` app and click :guilabel:`Create` to create a new Request for
+Quotation (RFQ). Add a :guilabel:`Vendor` to the :abbr:`RFQ (Request for Quotation)`, and add
+products to the :guilabel:`Product` lines by clicking :guilabel:`Add a line`. Then,
+:guilabel:`Confirm Order`. Once the :abbr:`RFQ (Request for Quotation)` is confirmed, click
+:guilabel:`Create Bill`.
 
-.. image:: manage/manage04.png
-  :align: center
-
-If you have a lot of awaiting orders, apply a filter using the search
-bar in the upper right. With this search bar, you may filter based on
-the vendor (partner), the product, or the source document (also known as
-the reference of your purchase order). You can also
-group the orders by different criteria under **Group By**. Selecting an
-item from this list will open the following screen where you then will
-receive the products.
-
-.. image:: manage/manage05.png
-  :align: center
-
-Purchasing service products does not trigger a delivery order.
-
-Managing Vendor Bills
----------------------
-
-When you receive a vendor bill for a previous purchase, be sure to
-record it in the Purchases application under the **Control Menu**. You
-need to create a new vendor bill even if you already registered a
-purchase order.
-
-.. image:: manage/manage06.png
-  :align: center
-
-The first thing you will need to do upon creating a vendor bill is to
-select the appropriate vendor, since doing so will also pull up any associated
-accounting or pricelist information. From there, you can choose to
-specify one or multiple Purchase Orders to populate the Vendor Bill
-with. When you select a Purchase Order from the list, Odoo will pull any
-uninvoiced products associated to that Purchase Order and automatically
-populate that information below. If you are having a hard time finding
-the appropriate vendor bill, you may search through the list by
-inputting the vendor reference number or your internal purchase order
-number.
-
-.. image:: manage/manage07.png
-  :align: center
-
-While the invoice is in a draft state, you can make any modifications you
-need (i.e. remove or add product lines, modify quantities, and change
-prices).
+On the :guilabel:`Draft Bill`, add a :guilabel:`Bill Date`, and add additional products to the
+:guilabel:`Product` lines by clicking :guilabel:`Add a line` (if needed). Next, :guilabel:`Confirm`
+the :guilabel:`Draft Bill`.
 
 .. note::
-   Your vendor may send you several bills for the same Purchase Order if:
+  Since the bill control policy is set to *ordered quantities*, the draft bill can be confirmed as
+  soon as it is created, without any products actually being received.
 
-   #. Your vendor is in back-order and is sending you invoices as they ship the products.
-   #. Your vendor is sending you a partial bill or asking for a deposit.
+On the new :guilabel:`Vendor Bill`, click :guilabel:`Add Credit Note` or :guilabel:`Add Debit Note`
+to add credit or debit notes to the bill; add a :guilabel:`Bill Reference` number; then click
+:menuselection:`Register Payment --> Create Payment` to complete the :guilabel:`Vendor Bill`.
 
-Every time you record a new vendor bill, Odoo will automatically
-populate the product quantities based on what has been received from the
-vendor. If this value is showing a zero, this means that you have not
-yet received this product and simply serves as a reminder that the
-product is not in hand and you may need to inquire further into this. At
-any point in time, before you validate the Vendor Bill, you may override
-this zero quantity.
+.. image:: manage/manage-draft-vendor-bill.png
+   :align: center
+   :alt: Vendor bill form for ordered quantities control policy.
 
-Vendor Bill Matching
-====================
+With the bill control policy set to received quantities
+-------------------------------------------------------
 
-What to do if your vendor bill does not match what you received
----------------------------------------------------------------
+To create and manage vendor bills on receipts using the *received quantities* bill control policy,
+first go to :menuselection:`Purchase --> Configuration --> Settings`, scroll down to the
+:guilabel:`Invoicing` section, and select :guilabel:`Received quantities`. Then, :guilabel:`Save`
+changes.
 
-If the bill you receive from the vendor has quantities that do not match
-the quantities automatically populated by Odoo, this could be due to
-several reasons:
+Next, go to the :guilabel:`Purchase` app and click :guilabel:`Create` to create a new
+:abbr:`RFQ (Request for Quotation)`. Add a :guilabel:`Vendor` to the
+:abbr:`RFQ (Request for Quotation)`, and add products to the :guilabel:`Product` lines by clicking
+:guilabel:`Add a line`. Then, :guilabel:`Confirm Order`.
 
-- The vendor is incorrectly charging you for products and/or services
-  that you have not ordered.
+.. note::
+  Clicking :guilabel:`Create Bill` will cause a :guilabel:`User Error` popup to appear. The
+  :guilabel:`Purchase Order` requires receipt of at least partial quantity of the items included on
+  the order to create a vendor bill.
 
-- The vendor is billing you for products that you might not have
-  received yet, as the invoicing control may be based on ordered or
-  received quantities.
+.. image:: manage/manage-user-error-popup.png
+   :align: center
+   :alt: User error popup for received quantities control policy.
 
-- The vendor did not bill you for previously purchased products.
+Next, click the :guilabel:`Receipt` smart button to view the :guilabel:`Warheouse Receipt Form`,
+and click :menuselection:`Validate --> Apply` to mark the :guilabel:`Done` quantities. Then,
+navigate back to the :guilabel:`Purchase Order` (via the breadcrumbs) and click
+:guilabel:`Create Bill`.
 
-In these instances it is recommended that you verify that the bill, and
-any associated purchase order to the vendor, are accurate and that you
-understand what you have ordered and what you have already received.
+On the :guilabel:`Draft Bill`, add a :guilabel:`Bill Date`, and add additional products to the
+:guilabel:`Product` lines by clicking :guilabel:`Add a line` (if needed). Next, :guilabel:`Confirm`
+the :guilabel:`Draft Bill`.
 
-If you are unable to find a purchase order related to a vendor bill,
-this could be due to one of a few reasons:
+.. note::
+  Since the bill control policy is set to *received quantities*, the draft bill can be confirmed
+  *only* when at least some of the quantities are received.
 
-- The vendor has already invoiced you for this purchase order;
-  therefore it is not going to appear anywhere in the selection.
+On the new :guilabel:`Vendor Bill`, click :guilabel:`Add Credit Note` or :guilabel:`Add Debit Note`
+to add credit or debit notes to the bill; add a :guilabel:`Bill Reference` number; then click
+:menuselection:`Register Payment --> Create Payment` to complete the :guilabel:`Vendor Bill`.
 
-- Someone in the company forgot to record a purchase order for this
-  vendor.
+Create and manage vendor bills in Accounting
+============================================
 
-- The vendor is charging you for something you did not order.
+Vendor bills can also be created directly from the :guilabel:`Accounting` app, *without* having to
+create a purchase order first. To do this, go to :menuselection:`Accounting --> Vendors --> Bills`,
+and click :guilabel:`Create`.
 
+Then, add a :guilabel:`Vendor`, add products to the :guilabel:`Product` lines by clicking
+:guilabel:`Add a line`, and add a :guilabel:`Bill Date`. :guilabel:`Confirm` the bill. From here,
+click the :guilabel:`Journal Items` tab to view (or change) the :guilabel:`Account` journals that
+were populated based on the configuration on the :guilabel:`Vendor` and :guilabel:`Product` forms.
 
+Then, click :guilabel:`Add Credit Note` or :guilabel:`Add Debit Note` to add credit or debit notes
+to the bill; add a :guilabel:`Bill Reference` number; then click :menuselection:`Register Payment
+--> Create Payment` to complete the :guilabel:`Vendor Bill`.
 
-How product quantities are managed
-----------------------------------
+.. tip::
+  To tie the :guilabel:`Draft Bill` to an existing purchase order, click the :guilabel:`drop-down`
+  menu next to :guilabel:`Auto-Complete`, and select a :abbr:`PO (Purchase Order)` from the menu.
+  The bill will auto-populate with the information from the :abbr:`PO (Purchase Order)`.
 
-By default, services are managed based on ordered quantities, while
-stockables and consumables are managed based on received quantities.
+.. image:: manage/manage-auto-complete.png
+   :align: center
+   :alt: Auto-complete drop-down list on draft vendor bill.
 
-If you need to manage products based on ordered quantities over received
-quantities, you will need to belong to the group **Purchase Manager**.
-Ask your system administrator to enable these access on :menuselection:`Settings
---> Users --> Users --> Access Rights`. Once you belong to the correct group,
-select the product(s) you wish to modify, and you should see a new field appear,
-labeled **Control Purchase Bills**.
+Batch billing
+=============
 
-.. image:: manage/manage08.png
-  :align: center
+From the :guilabel:`Accounting` app, vendor bills can be processed and managed in batches. To do
+this, go to :menuselection:`Accounting --> Vendors --> Bills`. Then, click the :guilabel:`checkbox`
+at the top left of the page under :guilabel:`Create`. This will select all existing vendor bills
+with a :guilabel:`Posted` or :guilabel:`Draft` :guilabel:`Status`.
 
-You can then change the default management method for the selected
-product to be based on either:
+From here, click the :guilabel:`Action` icon to export, delete, or send & print the bills; click
+the :guilabel:`Print` icon to print the invoices or bills; or click :guilabel:`Register Payment` to
+create and process payments for multiple vendor bills at once. Select the correct
+:guilabel:`Journal`, choose a :guilabel:`Payment Date` and :guilabel:`Payment Method`, and click
+:guilabel:`Create Payment`. This will create a list of journal entries all tied to their
+appropriate vendor bills.
 
-- Ordered quantities
+.. image:: manage/manage-batch-billing.png
+   :align: center
+   :alt: Batch billing register payment popup.
 
-- or Received quantities
-
-Batch Billing
--------------
-
-When creating a vendor bill and selecting the appropriate purchase
-order, you may continue to select additional purchase orders. Odoo
-will add the additional line items from the purchase orders you select. If you
-have not deleted the previous line items from the first purchase order,
-the bill will be linked to all the appropriate purchase orders.
+.. note::
+  Clicking :guilabel:`Register Payment` to create payments for vendor bills in batches will only
+  work for posted journal entries. So, all bills must have a :guilabel:`Posted` :guilabel:`Status`
+  to be processed in batches.
